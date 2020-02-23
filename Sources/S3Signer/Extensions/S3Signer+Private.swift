@@ -237,7 +237,9 @@ extension S3Signer {
 
         let region = region ?? config.region
 
-        updatedHeaders["Host"] = url.host ?? region.host
+	if (updatedHeaders["Host"] == nil) {
+        	updatedHeaders["Host"] = url.host ?? region.host
+	}
 
         let (canonRequest, fullURL) = try presignedURLCanonRequest(httpMethod, dates: dates, expiration: expiration, url: url, region: region, headers: updatedHeaders)
 
